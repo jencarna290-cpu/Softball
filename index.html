@@ -1,35 +1,92 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scorekeeper Pro - Entrada Manual</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .base { transition: all 0.2s ease; cursor: pointer; }
-        .base:hover { transform: scale(1.15); }
-        .base-ocupada { background-color: #ea580c !important; border-color: #c2410c !important; color: white !important; box-shadow: 0 0 12px #ea580c; }
-        .home-plate { clip-path: polygon(50% 0%, 100% 50%, 100% 100%, 0% 100%, 0% 50%); }
+        .base {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .base:hover {
+            transform: scale(1.15);
+        }
+
+        .base-ocupada {
+            background-color: #ea580c !important;
+            border-color: #c2410c !important;
+            color: white !important;
+            box-shadow: 0 0 12px #ea580c;
+        }
+
+        .home-plate {
+            clip-path: polygon(50% 0%, 100% 50%, 100% 100%, 0% 100%, 0% 50%);
+        }
     </style>
 </head>
+
 <body class="bg-slate-50 font-sans text-slate-800">
 
-    <div id="bloqueo-licencia" class="fixed inset-0 bg-slate-900 z-[100] flex flex-col items-center justify-center p-6 text-center hidden">
+    <div id="seccion-auth" class="fixed inset-0 bg-slate-900 z-[110] flex flex-col items-center justify-center p-6">
+        <div class="bg-white max-w-md w-full rounded-2xl p-8 shadow-2xl border space-y-6">
+            <div class="text-center">
+                <span class="text-5xl">🏟️</span>
+                <h2 class="text-2xl font-black text-slate-900 mt-2">Scorekeeper Pro Cloud</h2>
+                <p class="text-xs text-slate-400 mt-1">Registra tus ligas y estadísticas de forma segura y privada</p>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Correo Electrónico</label>
+                    <input type="email" id="auth-email" placeholder="ejemplo@correo.com"
+                        class="w-full border p-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Contraseña</label>
+                    <input type="password" id="auth-password" placeholder="••••••••"
+                        class="w-full border p-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 pt-2">
+                <button id="btn-login"
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-black py-3 rounded-xl text-xs uppercase tracking-wider shadow-sm">
+                    Ingresar
+                </button>
+                <button id="btn-register"
+                    class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-black py-3 rounded-xl text-xs uppercase tracking-wider">
+                    Registrarse
+                </button>
+            </div>
+            <p id="auth-error" class="text-center text-xs font-bold text-rose-600 hidden"></p>
+        </div>
+    </div>
+
+    <div id="bloqueo-licencia"
+        class="fixed inset-0 bg-slate-900 z-[100] flex flex-col items-center justify-center p-6 text-center hidden">
         <div class="bg-white max-w-md w-full rounded-2xl p-8 shadow-2xl border border-slate-100 space-y-6">
             <div class="text-6xl text-center">⏳</div>
             <h2 class="text-2xl font-black text-slate-900 tracking-tight">Período de Prueba Terminado</h2>
             <p class="text-sm text-slate-500 leading-relaxed">
-                Tus 15 días de evaluación gratuita de <strong>Scorekeeper Pro</strong> han expirado. Para continuar registrando partidos, estadísticas acumuladas y standings en vivo, por favor activa tu licencia comercial.
+                Tus 15 días de evaluación gratuita de <strong>Scorekeeper Pro</strong> han expirado. Para continuar
+                registrando partidos, estadísticas acumuladas y standings en vivo, por favor activa tu licencia
+                comercial.
             </p>
             <div class="p-4 bg-blue-50 rounded-xl border border-blue-100 text-left space-y-2">
-                <span class="text-[10px] font-bold text-blue-700 uppercase tracking-wider block">Beneficios Premium:</span>
+                <span class="text-[10px] font-bold text-blue-700 uppercase tracking-wider block">Beneficios
+                    Premium:</span>
                 <ul class="text-xs font-bold text-slate-700 space-y-1">
                     <li>• Soporte y reportes limpios en un clic.</li>
                     <li>• Sincronización en la nube para fanáticos.</li>
                     <li>• Personalización con el logo de tu liga.</li>
                 </ul>
             </div>
-            <a href="https://wa.me/tu_numero" target="_blank" class="block w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-3 rounded-xl text-xs uppercase tracking-wider shadow-md transition-all">
+            <a href="https://wa.me/tu_numero" target="_blank"
+                class="block w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-3 rounded-xl text-xs uppercase tracking-wider shadow-md transition-all">
                 📲 Contactar Administrador / Comprar Licencia
             </a>
         </div>
@@ -38,38 +95,52 @@
     <nav class="bg-blue-900 text-white shadow-md sticky top-0 z-50">
         <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center p-4 gap-4">
             <h1 class="text-xl font-bold tracking-wider">⚾ LOS AMIGOS J.S AUSENTES</h1>
-            
-            <div class="flex bg-blue-950 p-1 rounded-xl border border-blue-800">
-                <button id="btn-nav-anotar" onclick="cambiarPestaña('anotar')" class="px-4 py-2 text-xs font-bold rounded-lg transition-all bg-blue-600 text-white shadow-sm">
-                    🏟️ Anotar Encuentro
-                </button>
-                <button id="btn-nav-stats" onclick="cambiarPestaña('stats')" class="px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-white">
-                    📊 Historial y Estadísticas
-                </button>
+
+            <div class="flex items-center gap-4">
+                <div class="flex bg-blue-950 p-1 rounded-xl border border-blue-800">
+                    <button id="btn-nav-anotar" onclick="cambiarPestaña('anotar')"
+                        class="px-4 py-2 text-xs font-bold rounded-lg transition-all bg-blue-600 text-white shadow-sm">
+                        🏟️ Anotar Encuentro
+                    </button>
+                    <button id="btn-nav-stats" onclick="cambiarPestaña('stats')"
+                        class="px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-white">
+                        📊 Historial y Estadísticas
+                    </button>
+                </div>
+                <button id="btn-logout"
+                    class="bg-rose-600 hover:bg-rose-700 font-bold text-[10px] uppercase tracking-wider px-3 py-2 rounded-xl text-white">Salir</button>
             </div>
         </div>
     </nav>
 
     <div class="container mx-auto p-4 max-w-7xl space-y-6">
-        
+
         <div id="seccion-pestaña-anotar" class="space-y-6">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                
+
                 <div class="lg:col-span-2 space-y-6">
-                    
+
                     <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 overflow-x-auto">
                         <div class="flex justify-between items-center mb-3">
-                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">📋 PIZARRA TRADICIONAL DE ENCUENTRO</span>
-                            <span id="label-dias-restantes" class="text-[10px] font-black text-amber-600 bg-amber-50 px-2 py-0.5 rounded-md"></span>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">📋
+                                PIZARRA TRADICIONAL DE ENCUENTRO</span>
+                            <span id="label-dias-restantes"
+                                class="text-[10px] font-black text-amber-600 bg-amber-50 px-2 py-0.5 rounded-md"></span>
                         </div>
-                        
+
                         <table class="min-w-full table-fixed border-collapse text-center text-sm font-bold">
                             <thead>
                                 <tr class="bg-slate-100 text-slate-500 text-xs border-b border-slate-200">
                                     <th class="w-1/4 py-2 px-3 text-left uppercase tracking-wider">Equipos</th>
-                                    <th class="w-16">1</th><th class="w-16">2</th><th class="w-16">3</th>
-                                    <th class="w-16">4</th><th class="w-16">5</th><th class="w-16">6</th>
-                                    <th class="w-16">7</th><th class="w-16">8</th><th class="w-16">9</th>
+                                    <th class="w-16">1</th>
+                                    <th class="w-16">2</th>
+                                    <th class="w-16">3</th>
+                                    <th class="w-16">4</th>
+                                    <th class="w-16">5</th>
+                                    <th class="w-16">6</th>
+                                    <th class="w-16">7</th>
+                                    <th class="w-16">8</th>
+                                    <th class="w-16">9</th>
                                     <th class="w-16 bg-blue-50 text-blue-900 font-black border-l">C</th>
                                     <th class="w-16 bg-emerald-50 text-emerald-900 font-black">H</th>
                                     <th class="w-16 bg-rose-50 text-rose-900 font-black">E</th>
@@ -78,124 +149,202 @@
                             <tbody class="divide-y divide-slate-100 text-slate-800">
                                 <tr class="h-12">
                                     <td class="text-left py-2 px-3">
-                                        <input type="text" id="input-name-visitante" oninput="actualizarNombresEquipos()" value="VISITANTE" class="w-full font-black text-slate-700 bg-transparent focus:text-blue-600 focus:outline-none uppercase tracking-wider cursor-pointer">
+                                        <input type="text" id="input-name-visitante"
+                                            oninput="actualizarNombresEquipos()" value="VISITANTE"
+                                            class="w-full font-black text-slate-700 bg-transparent focus:text-blue-600 focus:outline-none uppercase tracking-wider cursor-pointer">
                                     </td>
-                                    <td id="v-i1" class="font-normal text-slate-400">-</td><td id="v-i2" class="font-normal text-slate-400">-</td><td id="v-i3" class="font-normal text-slate-400">-</td>
-                                    <td id="v-i4" class="font-normal text-slate-400">-</td><td id="v-i5" class="font-normal text-slate-400">-</td><td id="v-i6" class="font-normal text-slate-400">-</td>
-                                    <td id="v-i7" class="font-normal text-slate-400">-</td><td id="v-i8" class="font-normal text-slate-400">-</td><td id="v-i9" class="font-normal text-slate-400">-</td>
-                                    <td id="carreras-visitante" class="text-xl font-black text-blue-900 bg-blue-50/50 border-l">0</td>
-                                    <td id="hits-visitante" class="text-lg font-bold text-emerald-700 bg-emerald-50/50">0</td>
-                                    <td id="errores-visitante" class="text-lg font-bold text-rose-600 bg-rose-50/50">0</td>
+                                    <td id="v-i1" class="font-normal text-slate-400">-</td>
+                                    <td id="v-i2" class="font-normal text-slate-400">-</td>
+                                    <td id="v-i3" class="font-normal text-slate-400">-</td>
+                                    <td id="v-i4" class="font-normal text-slate-400">-</td>
+                                    <td id="v-i5" class="font-normal text-slate-400">-</td>
+                                    <td id="v-i6" class="font-normal text-slate-400">-</td>
+                                    <td id="v-i7" class="font-normal text-slate-400">-</td>
+                                    <td id="v-i8" class="font-normal text-slate-400">-</td>
+                                    <td id="v-i9" class="font-normal text-slate-400">-</td>
+                                    <td id="carreras-visitante"
+                                        class="text-xl font-black text-blue-900 bg-blue-50/50 border-l">0</td>
+                                    <td id="hits-visitante" class="text-lg font-bold text-emerald-700 bg-emerald-50/50">
+                                        0</td>
+                                    <td id="errores-visitante" class="text-lg font-bold text-rose-600 bg-rose-50/50">0
+                                    </td>
                                 </tr>
                                 <tr class="h-12">
                                     <td class="text-left py-2 px-3">
-                                        <input type="text" id="input-name-local" oninput="actualizarNombresEquipos()" value="LOCAL" class="w-full font-black text-slate-700 bg-transparent focus:text-blue-600 focus:outline-none uppercase tracking-wider cursor-pointer">
+                                        <input type="text" id="input-name-local" oninput="actualizarNombresEquipos()"
+                                            value="LOCAL"
+                                            class="w-full font-black text-slate-700 bg-transparent focus:text-blue-600 focus:outline-none uppercase tracking-wider cursor-pointer">
                                     </td>
-                                    <td id="l-i1" class="font-normal text-slate-400">-</td><td id="l-i2" class="font-normal text-slate-400">-</td><td id="l-i3" class="font-normal text-slate-400">-</td>
-                                    <td id="l-i4" class="font-normal text-slate-400">-</td><td id="l-i5" class="font-normal text-slate-400">-</td><td id="l-i6" class="font-normal text-slate-400">-</td>
-                                    <td id="l-i7" class="font-normal text-slate-400">-</td><td id="l-i8" class="font-normal text-slate-400">-</td><td id="l-i9" class="font-normal text-slate-400">-</td>
-                                    <td id="carreras-local" class="text-xl font-black text-blue-900 bg-blue-50/50 border-l">0</td>
-                                    <td id="hits-local" class="text-lg font-bold text-emerald-700 bg-emerald-50/50">0</td>
+                                    <td id="l-i1" class="font-normal text-slate-400">-</td>
+                                    <td id="l-i2" class="font-normal text-slate-400">-</td>
+                                    <td id="l-i3" class="font-normal text-slate-400">-</td>
+                                    <td id="l-i4" class="font-normal text-slate-400">-</td>
+                                    <td id="l-i5" class="font-normal text-slate-400">-</td>
+                                    <td id="l-i6" class="font-normal text-slate-400">-</td>
+                                    <td id="l-i7" class="font-normal text-slate-400">-</td>
+                                    <td id="l-i8" class="font-normal text-slate-400">-</td>
+                                    <td id="l-i9" class="font-normal text-slate-400">-</td>
+                                    <td id="carreras-local"
+                                        class="text-xl font-black text-blue-900 bg-blue-50/50 border-l">0</td>
+                                    <td id="hits-local" class="text-lg font-bold text-emerald-700 bg-emerald-50/50">0
+                                    </td>
                                     <td id="errores-local" class="text-lg font-bold text-rose-600 bg-rose-50/50">0</td>
                                 </tr>
                             </tbody>
                         </table>
 
-                        <div class="flex flex-wrap justify-between items-center mt-4 pt-4 border-t border-slate-100 gap-4">
+                        <div
+                            class="flex flex-wrap justify-between items-center mt-4 pt-4 border-t border-slate-100 gap-4">
                             <div class="text-xs bg-slate-100 px-3 py-1.5 rounded-lg text-slate-600">
                                 Estado: <span id="label-inning" class="font-black text-slate-900">1 ▲ (Alta)</span>
                             </div>
                             <div class="flex gap-4 text-xs">
                                 <div class="flex items-center gap-1.5">
                                     <span class="text-slate-400 font-bold uppercase">VIS:</span>
-                                    <button onclick="modificarCarreraManual('visitante', -1)" class="bg-slate-100 px-2 py-0.5 rounded font-bold hover:bg-slate-200">-</button>
-                                    <button onclick="modificarCarreraManual('visitante', 1)" class="bg-slate-100 px-2 py-0.5 rounded font-bold hover:bg-slate-200">+</button>
+                                    <button onclick="modificarCarreraManual('visitante', -1)"
+                                        class="bg-slate-100 px-2 py-0.5 rounded font-bold hover:bg-slate-200">-</button>
+                                    <button onclick="modificarCarreraManual('visitante', 1)"
+                                        class="bg-slate-100 px-2 py-0.5 rounded font-bold hover:bg-slate-200">+</button>
                                 </div>
                                 <div class="flex items-center gap-1.5">
                                     <span class="text-slate-400 font-bold uppercase">LOC:</span>
-                                    <button onclick="modificarCarreraManual('local', -1)" class="bg-slate-100 px-2 py-0.5 rounded font-bold hover:bg-slate-200">-</button>
-                                    <button onclick="modificarCarreraManual('local', 1)" class="bg-slate-100 px-2 py-0.5 rounded font-bold hover:bg-slate-200">+</button>
+                                    <button onclick="modificarCarreraManual('local', -1)"
+                                        class="bg-slate-100 px-2 py-0.5 rounded font-bold hover:bg-slate-200">-</button>
+                                    <button onclick="modificarCarreraManual('local', 1)"
+                                        class="bg-slate-100 px-2 py-0.5 rounded font-bold hover:bg-slate-200">+</button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-3 bg-white p-4 rounded-2xl shadow-sm border border-slate-100 text-center items-center gap-4">
+                    <div
+                        class="grid grid-cols-3 bg-white p-4 rounded-2xl shadow-sm border border-slate-100 text-center items-center gap-4">
                         <div>
-                            <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">BOLAS</span>
+                            <span
+                                class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">BOLAS</span>
                             <span id="count-bolas" class="text-3xl font-black text-emerald-600">0</span>
                             <div class="flex justify-center gap-1 mt-2">
-                                <button onclick="modificarCuenta('bolas', -1)" class="bg-slate-50 border px-2.5 py-0.5 rounded shadow-sm text-slate-600 hover:bg-slate-100">-</button>
-                                <button onclick="modificarCuenta('bolas', 1)" class="bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded shadow-sm text-emerald-700 hover:bg-emerald-100">+</button>
+                                <button onclick="modificarCuenta('bolas', -1)"
+                                    class="bg-slate-50 border px-2.5 py-0.5 rounded shadow-sm text-slate-600 hover:bg-slate-100">-</button>
+                                <button onclick="modificarCuenta('bolas', 1)"
+                                    class="bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded shadow-sm text-emerald-700 hover:bg-emerald-100">+</button>
                             </div>
                         </div>
                         <div>
-                            <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">STRIKES</span>
+                            <span
+                                class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">STRIKES</span>
                             <span id="count-strikes" class="text-3xl font-black text-rose-600">0</span>
                             <div class="flex justify-center gap-1 mt-2">
-                                <button onclick="modificarCuenta('strikes', -1)" class="bg-slate-50 border px-2.5 py-0.5 rounded shadow-sm text-slate-600 hover:bg-slate-100">-</button>
-                                <button onclick="modificarCuenta('strikes', 1)" class="bg-rose-50 border border-rose-200 px-2.5 py-0.5 rounded shadow-sm text-rose-700 hover:bg-rose-100">+</button>
+                                <button onclick="modificarCuenta('strikes', -1)"
+                                    class="bg-slate-50 border px-2.5 py-0.5 rounded shadow-sm text-slate-600 hover:bg-slate-100">-</button>
+                                <button onclick="modificarCuenta('strikes', 1)"
+                                    class="bg-rose-50 border border-rose-200 px-2.5 py-0.5 rounded shadow-sm text-rose-700 hover:bg-rose-100">+</button>
                             </div>
                         </div>
                         <div>
-                            <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">OUTS</span>
+                            <span
+                                class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">OUTS</span>
                             <span id="count-outs" class="text-3xl font-black text-blue-600">0</span>
                             <div class="flex justify-center gap-1 mt-2">
-                                <button onclick="modificarCuenta('outs', -1)" class="bg-slate-50 border px-2.5 py-0.5 rounded shadow-sm text-slate-600 hover:bg-slate-100">-</button>
-                                <button onclick="modificarCuenta('outs', 1)" class="bg-blue-50 border border-blue-200 px-2.5 py-0.5 rounded shadow-sm text-blue-700 hover:bg-blue-100">+</button>
+                                <button onclick="modificarCuenta('outs', -1)"
+                                    class="bg-slate-50 border px-2.5 py-0.5 rounded shadow-sm text-slate-600 hover:bg-slate-100">-</button>
+                                <button onclick="modificarCuenta('outs', 1)"
+                                    class="bg-blue-50 border border-blue-200 px-2.5 py-0.5 rounded shadow-sm text-blue-700 hover:bg-blue-100">+</button>
                             </div>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 flex flex-col justify-between">
+                        <div
+                            class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 flex flex-col justify-between">
                             <div>
-                                <span class="text-[10px] text-blue-600 font-bold tracking-widest uppercase">BATEADOR ACTIVO:</span>
-                                <h4 class="text-2xl font-black text-slate-800 mt-1" id="nombre-bateador-actual">Cargando...</h4>
-                                
+                                <span class="text-[10px] text-blue-600 font-bold tracking-widest uppercase">BATEADOR
+                                    ACTIVO:</span>
+                                <h4 class="text-2xl font-black text-slate-800 mt-1" id="nombre-bateador-actual">
+                                    Cargando...</h4>
+
                                 <div class="mt-4 p-3 bg-slate-50 rounded-xl border border-slate-100 text-xs">
-                                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Registro del Juego de Hoy:</span>
+                                    <span
+                                        class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Registro
+                                        del Juego de Hoy:</span>
                                     <div class="grid grid-cols-4 gap-2 text-center font-bold text-slate-700">
-                                        <div class="bg-white p-1.5 rounded border"><span class="block text-[9px] text-slate-400">AB</span><span id="stats-hoy-ab">0</span></div>
-                                        <div class="bg-white p-1.5 rounded border"><span class="block text-[9px] text-slate-400">H</span><span id="stats-hoy-h">0</span></div>
-                                        <div class="bg-white p-1.5 rounded border"><span class="block text-[9px] text-slate-400">RBI</span><span id="stats-hoy-rbi">0</span></div>
-                                        <div class="bg-white p-1.5 rounded border text-rose-600"><span class="block text-[9px] text-slate-400">K</span><span id="stats-hoy-k">0</span></div>
+                                        <div class="bg-white p-1.5 rounded border"><span
+                                                class="block text-[9px] text-slate-400">AB</span><span
+                                                id="stats-hoy-ab">0</span></div>
+                                        <div class="bg-white p-1.5 rounded border"><span
+                                                class="block text-[9px] text-slate-400">H</span><span
+                                                id="stats-hoy-h">0</span></div>
+                                        <div class="bg-white p-1.5 rounded border"><span
+                                                class="block text-[9px] text-slate-400">RBI</span><span
+                                                id="stats-hoy-rbi">0</span></div>
+                                        <div class="bg-white p-1.5 rounded border text-rose-600"><span
+                                                class="block text-[9px] text-slate-400">K</span><span
+                                                id="stats-hoy-k">0</span></div>
                                     </div>
                                 </div>
 
                                 <div class="mt-3">
-                                    <label class="block text-[9px] text-slate-400 font-bold uppercase mb-1">Cambiar Bateador de Emergencia:</label>
-                                    <select id="select-forzar-bateador" onchange="forzarCambioBateadorActivo()" class="w-full border p-1.5 rounded-lg text-xs bg-slate-50 font-bold text-slate-700 focus:outline-none"></select>
+                                    <label class="block text-[9px] text-slate-400 font-bold uppercase mb-1">Cambiar
+                                        Bateador de Emergencia:</label>
+                                    <select id="select-forzar-bateador" onchange="forzarCambioBateadorActivo()"
+                                        class="w-full border p-1.5 rounded-lg text-xs bg-slate-50 font-bold text-slate-700 focus:outline-none"></select>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 flex flex-col items-center justify-center relative">
-                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest absolute top-3">TOQUE MANUAL DE CORREDORES</span>
+                        <div
+                            class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 flex flex-col items-center justify-center relative">
+                            <span
+                                class="text-[10px] font-bold text-slate-400 uppercase tracking-widest absolute top-3">TOQUE
+                                MANUAL DE CORREDORES</span>
                             <div class="w-28 h-28 border border-dashed border-slate-200 relative mt-6">
-                                <div id="base-2" onclick="conmutarBaseManual(2)" class="base w-7 h-7 bg-slate-100 border border-slate-300 absolute -top-3.5 left-1/2 -translate-x-1/2 rounded flex items-center justify-center text-[10px] font-black text-slate-500">2B</div>
-                                <div id="base-3" onclick="conmutarBaseManual(3)" class="base w-7 h-7 bg-slate-100 border border-slate-300 absolute top-1/2 -translate-y-1/2 -left-3.5 rounded flex items-center justify-center text-[10px] font-black text-slate-500">3B</div>
-                                <div id="base-1" onclick="conmutarBaseManual(1)" class="base w-7 h-7 bg-slate-100 border border-slate-300 absolute top-1/2 -translate-y-1/2 -right-3.5 rounded flex items-center justify-center text-[10px] font-black text-slate-500">1B</div>
-                                <div id="base-hp" onclick="anotarCarreraPorHomePlate()" class="base home-plate w-8 h-8 bg-blue-900 absolute -bottom-4 left-1/2 -translate-x-1/2 flex items-end justify-center pb-0.5 text-[9px] font-black text-white">HP</div>
+                                <div id="base-2" onclick="conmutarBaseManual(2)"
+                                    class="base w-7 h-7 bg-slate-100 border border-slate-300 absolute -top-3.5 left-1/2 -translate-x-1/2 rounded flex items-center justify-center text-[10px] font-black text-slate-500">
+                                    2B</div>
+                                <div id="base-3" onclick="conmutarBaseManual(3)"
+                                    class="base w-7 h-7 bg-slate-100 border border-slate-300 absolute top-1/2 -translate-y-1/2 -left-3.5 rounded flex items-center justify-center text-[10px] font-black text-slate-500">
+                                    3B</div>
+                                <div id="base-1" onclick="conmutarBaseManual(1)"
+                                    class="base w-7 h-7 bg-slate-100 border border-slate-300 absolute top-1/2 -translate-y-1/2 -right-3.5 rounded flex items-center justify-center text-[10px] font-black text-slate-500">
+                                    1B</div>
+                                <div id="base-hp" onclick="anotarCarreraPorHomePlate()"
+                                    class="base home-plate w-8 h-8 bg-blue-900 absolute -bottom-4 left-1/2 -translate-x-1/2 flex items-end justify-center pb-0.5 text-[9px] font-black text-white">
+                                    HP</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5">
-                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-4">REGISTRAR ACCIÓN DEL TURNO</span>
+                        <span
+                            class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-4">REGISTRAR
+                            ACCIÓN DEL TURNO</span>
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                            <button onclick="anotarTurno('H1')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3 rounded-xl text-sm shadow-sm">H1</button>
-                            <button onclick="anotarTurno('H2')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3 rounded-xl text-sm shadow-sm">H2</button>
-                            <button onclick="anotarTurno('H3')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3 rounded-xl text-sm shadow-sm">H3</button>
-                            <button onclick="anotarTurno('HR')" class="bg-emerald-700 hover:bg-emerald-800 text-white font-black py-3 rounded-xl text-sm shadow-sm">🚀 HR</button>
-                            <button onclick="anotarTurno('BB')" class="bg-amber-500 hover:bg-amber-600 text-white font-black py-3 rounded-xl text-sm shadow-sm">BB</button>
-                            <button onclick="anotarTurno('HBP')" class="bg-amber-600 hover:bg-amber-700 text-white font-black py-3 rounded-xl text-sm shadow-sm">HBP</button>
-                            <button onclick="anotarTurno('E')" class="bg-orange-500 hover:bg-orange-600 text-white font-black py-3 rounded-xl text-sm shadow-sm">E</button>
-                            <button onclick="anotarTurno('K')" class="bg-purple-600 hover:bg-purple-700 text-white font-black py-3 rounded-xl text-sm shadow-sm">🪓 K</button>
-                            
+                            <button onclick="anotarTurno('H1')"
+                                class="bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3 rounded-xl text-sm shadow-sm">H1</button>
+                            <button onclick="anotarTurno('H2')"
+                                class="bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3 rounded-xl text-sm shadow-sm">H2</button>
+                            <button onclick="anotarTurno('H3')"
+                                class="bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3 rounded-xl text-sm shadow-sm">H3</button>
+                            <button onclick="anotarTurno('HR')"
+                                class="bg-emerald-700 hover:bg-emerald-800 text-white font-black py-3 rounded-xl text-sm shadow-sm">🚀
+                                HR</button>
+                            <button onclick="anotarTurno('BB')"
+                                class="bg-amber-500 hover:bg-amber-600 text-white font-black py-3 rounded-xl text-sm shadow-sm">BB</button>
+                            <button onclick="anotarTurno('HBP')"
+                                class="bg-amber-600 hover:bg-amber-700 text-white font-black py-3 rounded-xl text-sm shadow-sm">HBP</button>
+                            <button onclick="anotarTurno('E')"
+                                class="bg-orange-500 hover:bg-orange-600 text-white font-black py-3 rounded-xl text-sm shadow-sm">E</button>
+                            <button onclick="anotarTurno('K')"
+                                class="bg-purple-600 hover:bg-purple-700 text-white font-black py-3 rounded-xl text-sm shadow-sm">🪓
+                                K</button>
+
                             <div class="col-span-2 flex gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200">
-                                <input type="text" id="input-jugada-manual" onkeydown="if(event.key === 'Enter') registrarJugadaManual()" placeholder="Escribe jugada..." class="w-full px-3 text-xs font-bold rounded-lg bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 uppercase tracking-wider">
-                                <button onclick="registrarJugadaManual()" class="bg-blue-600 hover:bg-blue-700 text-white font-black px-4 rounded-lg text-xs shadow-sm whitespace-nowrap">
+                                <input type="text" id="input-jugada-manual"
+                                    onkeydown="if(event.key === 'Enter') registrarJugadaManual()"
+                                    placeholder="Escribe jugada..."
+                                    class="w-full px-3 text-xs font-bold rounded-lg bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 uppercase tracking-wider">
+                                <button onclick="registrarJugadaManual()"
+                                    class="bg-blue-600 hover:bg-blue-700 text-white font-black px-4 rounded-lg text-xs shadow-sm whitespace-nowrap">
                                     💾 OK
                                 </button>
                             </div>
@@ -206,22 +355,29 @@
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 space-y-4 h-fit">
                     <div class="border-b pb-2 flex justify-between items-center">
                         <div>
-                            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">📋 Alineación en Vivo</h3>
-                            <p class="text-sm font-black text-blue-900 uppercase mt-0.5" id="nombre-equipo-lineup-label">VISITANTE</p>
+                            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">📋 Alineación en Vivo
+                            </h3>
+                            <p class="text-sm font-black text-blue-900 uppercase mt-0.5"
+                                id="nombre-equipo-lineup-label">VISITANTE</p>
                         </div>
-                        <span class="text-[10px] bg-emerald-50 text-emerald-700 font-bold px-2.5 py-0.5 rounded-full">Bateando</span>
+                        <span
+                            class="text-[10px] bg-emerald-50 text-emerald-700 font-bold px-2.5 py-0.5 rounded-full">Bateando</span>
                     </div>
                     <div id="lista-lineup-lateral" class="space-y-2 max-h-[380px] overflow-y-auto pr-1"></div>
-                    
+
                     <div class="border-t pt-3 mt-2 space-y-2">
-                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest block">➕ Entrada Rápida de Jugador</span>
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest block">➕ Entrada
+                            Rápida de Jugador</span>
                         <div class="flex gap-1">
-                            <select id="nuevo-jugador-equipo" class="border text-[11px] rounded-lg bg-slate-50 p-1 font-bold">
+                            <select id="nuevo-jugador-equipo"
+                                class="border text-[11px] rounded-lg bg-slate-50 p-1 font-bold">
                                 <option value="visitante">✈️ VIS</option>
                                 <option value="local">🏠 LOC</option>
                             </select>
-                            <input type="text" id="nuevo-jugador-nombre" placeholder="Nombre" class="w-full border text-[11px] rounded-lg p-1 focus:outline-none">
-                            <button onclick="agregarJugadorAlRoster()" class="bg-blue-600 text-white font-bold px-2 rounded-lg text-xs">➕</button>
+                            <input type="text" id="nuevo-jugador-nombre" placeholder="Nombre"
+                                class="w-full border text-[11px] rounded-lg p-1 focus:outline-none">
+                            <button onclick="agregarJugadorAlRoster()"
+                                class="bg-blue-600 text-white font-bold px-2 rounded-lg text-xs">➕</button>
                         </div>
                     </div>
                 </div>
@@ -232,25 +388,46 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 flex flex-col justify-between">
                     <div>
-                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">💾 ACCIÓN DE FINALIZACIÓN</span>
-                        <p class="text-xs text-slate-500 mb-4">Usa este botón una vez termine el partido oficial para consolidar las estadísticas acumuladas.</p>
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">💾
+                            ACCIÓN DE FINALIZACIÓN</span>
+                        <p class="text-xs text-slate-500 mb-4">Usa este botón una vez termine el partido oficial para
+                            consolidar las estadísticas acumuladas.</p>
                     </div>
-                    <button onclick="finalizarPartidoYRegistrarRecord()" class="w-full bg-slate-900 hover:bg-black text-white font-bold py-3 rounded-xl text-xs uppercase tracking-wider shadow-sm transition-all">
+                    <button onclick="finalizarPartidoYRegistrarRecord()"
+                        class="w-full bg-slate-900 hover:bg-black text-white font-bold py-3 rounded-xl text-xs uppercase tracking-wider shadow-sm transition-all">
                         Finalizar Encuentro Oficial
                     </button>
                 </div>
 
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5">
-                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block border-b pb-2 mb-2">📊 STANDINGS DE LA TEMPORADA (G/P)</span>
+                    <span
+                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block border-b pb-2 mb-2">📊
+                        STANDINGS DE LA TEMPORADA (G/P)</span>
                     <table class="min-w-full text-xs text-left">
                         <thead>
                             <tr class="text-slate-400 font-semibold border-b">
-                                <th class="py-2">Club</th> <th class="text-center">JJ</th> <th class="text-center text-emerald-600">G</th> <th class="text-center text-rose-500">P</th> <th class="text-center">PCT</th>
+                                <th class="py-2">Club</th>
+                                <th class="text-center">JJ</th>
+                                <th class="text-center text-emerald-600">G</th>
+                                <th class="text-center text-rose-500">P</th>
+                                <th class="text-center">PCT</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100 font-bold text-slate-700">
-                            <tr> <td class="py-2.5 uppercase text-slate-800" id="td-label-visitante">VISITANTE</td> <td class="text-center font-normal" id="jj-visitante">0</td> <td class="text-center text-emerald-600" id="g-visitante">0</td> <td class="text-center text-rose-500" id="p-visitante">0</td> <td class="text-center text-blue-900" id="pct-visitante">.000</td> </tr>
-                            <tr> <td class="py-2.5 uppercase text-slate-800" id="td-label-local">LOCAL</td> <td class="text-center font-normal" id="jj-local">0</td> <td class="text-center text-emerald-600" id="g-local">0</td> <td class="text-center text-rose-500" id="p-local">0</td> <td class="text-center text-blue-900" id="pct-local">.000</td> </tr>
+                            <tr>
+                                <td class="py-2.5 uppercase text-slate-800" id="td-label-visitante">VISITANTE</td>
+                                <td class="text-center font-normal" id="jj-visitante">0</td>
+                                <td class="text-center text-emerald-600" id="g-visitante">0</td>
+                                <td class="text-center text-rose-500" id="p-visitante">0</td>
+                                <td class="text-center text-blue-900" id="pct-visitante">.000</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2.5 uppercase text-slate-800" id="td-label-local">LOCAL</td>
+                                <td class="text-center font-normal" id="jj-local">0</td>
+                                <td class="text-center text-emerald-600" id="g-local">0</td>
+                                <td class="text-center text-rose-500" id="p-local">0</td>
+                                <td class="text-center text-blue-900" id="pct-local">.000</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -258,9 +435,11 @@
 
             <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5">
                 <div class="flex flex-wrap justify-between items-center mb-4 gap-4">
-                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">📈 REGISTROS HISTÓRICOS GENERALES</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">📈 REGISTROS
+                        HISTÓRICOS GENERALES</span>
                     <div class="flex items-center gap-2">
-                        <select id="filtro-equipo-stats" onchange="renderizarTablaHistorial()" class="border p-2 rounded-xl text-xs bg-slate-50 font-bold text-slate-700 uppercase focus:outline-none">
+                        <select id="filtro-equipo-stats" onchange="renderizarTablaHistorial()"
+                            class="border p-2 rounded-xl text-xs bg-slate-50 font-bold text-slate-700 uppercase focus:outline-none">
                             <option value="TODOS">🌍 Ver Todos</option>
                             <option value="VISITANTE" id="opt-filtro-visitante">VISITANTE</option>
                             <option value="LOCAL" id="opt-filtro-local">LOCAL</option>
@@ -272,10 +451,23 @@
                     <table class="min-w-full text-xs text-left">
                         <thead class="bg-slate-900 text-white font-bold">
                             <tr>
-                                <th class="py-3 px-4">Jugador</th> <th>Club</th> <th class="text-center">AB</th> <th class="text-center">H</th> <th class="text-center text-amber-400">RBI</th> <th class="text-center">H1</th> <th class="text-center">H2</th> <th class="text-center">H3</th> <th class="text-center text-yellow-400">HR</th> <th class="text-center">BB</th> <th class="text-center">HBP</th> <th class="text-center text-rose-400">K</th> <th class="py-3 px-4 text-center bg-blue-900">AVG</th>
+                                <th class="py-3 px-4">Jugador</th>
+                                <th>Club</th>
+                                <th class="text-center">AB</th>
+                                <th class="text-center">H</th>
+                                <th class="text-center text-amber-400">RBI</th>
+                                <th class="text-center">H1</th>
+                                <th class="text-center">H2</th>
+                                <th class="text-center">H3</th>
+                                <th class="text-center text-yellow-400">HR</th>
+                                <th class="text-center">BB</th>
+                                <th class="text-center">HBP</th>
+                                <th class="text-center text-rose-400">K</th>
+                                <th class="py-3 px-4 text-center bg-blue-900">AVG</th>
                             </tr>
                         </thead>
-                        <tbody id="tabla-historial-acumulado" class="divide-y divide-slate-200 font-bold text-slate-700 bg-white"></tbody>
+                        <tbody id="tabla-historial-acumulado"
+                            class="divide-y divide-slate-200 font-bold text-slate-700 bg-white"></tbody>
                     </table>
                 </div>
             </div>
@@ -283,66 +475,149 @@
 
     </div>
 
-    <script>
-        // MÓDULO DE VERIFICACIÓN DE LICENCIA (15 DÍAS DE PRUEBA)
-        function verificarPeriodoPrueba() {
-            const DURACION_PRUEBA = 15 * 24 * 60 * 60 * 1000; // 15 días en milisegundos
-            let fechaInicio = localStorage.getItem("trial_scorekeeper_start");
-            let ahora = Date.now();
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-            if (!fechaInicio) {
-                // Si es la primera vez que abre la app, marcamos la fecha de inicio del reloj
-                localStorage.setItem("trial_scorekeeper_start", ahora.toString());
-                fechaInicio = ahora;
-            } else {
-                fechaInicio = parseInt(fechaInicio);
-            }
+        // ==========================================
+        // REEMPLAZA ESTO CON TUS CREDENCIALES REALES:
+        // ==========================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyCKxxrR0TBWgTWSxgbt1omD_CUpk9uN3iU",
+            authDomain: "softball-e71ac.firebaseapp.com",
+            projectId: "softball-e71ac",
+            storageBucket: "softball-e71ac.firebasestorage.app",
+            messagingSenderId: "208888605569",
+            appId: "1:208888605569:web:82275a553994113b9e1680",
+            measurementId: "G-1TFF5VN8C2"
+        };
 
-            let fechaExpiracion = fechaInicio + DURACION_PRUEBA;
-            let tiempoRestante = fechaExpiracion - ahora;
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
-            if (tiempoRestante <= 0) {
-                // Bloquea la pantalla inmediatamente
-                document.getElementById("bloqueo-licencia").classList.remove("hidden");
-                return false;
-            } else {
-                // Muestra de manera informativa los días que le quedan en el header de la pizarra
-                let diasRestantes = Math.ceil(tiempoRestante / (1000 * 60 * 60 * 24));
-                document.getElementById("label-dias-restantes").innerText = `⏱️ Periodo de prueba: ${diasRestantes} días restantes`;
-                return true;
-            }
-        }
+        let usuarioActual = null;
+        let suscripcionRealtime = null;
 
+        // Variables de Control Interno del Formato Original
         let estadoJuego = {
             carrerasLocal: 0, carrerasVisitante: 0, hitsVisitante: 0, hitsLocal: 0, erroresVisitante: 0, erroresLocal: 0,
-            countBolas: 0, countStrikes: 0, outs: 0, inningActual: 1, esParteAlta: true, 
+            countBolas: 0, countStrikes: 0, outs: 0, inningActual: 1, esParteAlta: true,
             indexBateadorVisitante: 0, indexBateadorLocal: 0, nombreVisitante: "VISITANTE", nombreLocal: "LOCAL",
             bases: { 1: false, 2: false, 3: false },
             boxScore: {
-                visitante: { 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0 },
-                local: { 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0 }
+                visitante: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 },
+                local: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 }
             }
         };
 
         let recordsEquipos = { visitante: { j: 0, g: 0, p: 0 }, local: { j: 0, g: 0, p: 0 } };
         let lineupVisitante = [
-            { id: "V1", nombre: "CARLOS MARTÍNEZ", ab:0, rbi:0, h1:0, h2:0, h3:0, hr:0, bb:0, hbp:0, e:0, k:0 },
-            { id: "V2", nombre: "MANNY RAMÍREZ", ab:0, rbi:0, h1:0, h2:0, h3:0, hr:0, bb:0, hbp:0, e:0, k:0 }
+            { id: "V1", nombre: "CARLOS MARTÍNEZ", ab: 0, rbi: 0, h1: 0, h2: 0, h3: 0, hr: 0, bb: 0, hbp: 0, e: 0, k: 0 },
+            { id: "V2", nombre: "MANNY RAMÍREZ", ab: 0, rbi: 0, h1: 0, h2: 0, h3: 0, hr: 0, bb: 0, hbp: 0, e: 0, k: 0 }
         ];
         let lineupLocal = [
-            { id: "L1", nombre: "DAVID ORTIZ", ab:0, rbi:0, h1:0, h2:0, h3:0, hr:0, bb:0, hbp:0, e:0, k:0 },
-            { id: "L2", nombre: "VLADIMIR GUERRERO", ab:0, rbi:0, h1:0, h2:0, h3:0, hr:0, bb:0, hbp:0, e:0, k:0 }
+            { id: "L1", nombre: "DAVID ORTIZ", ab: 0, rbi: 0, h1: 0, h2: 0, h3: 0, hr: 0, bb: 0, hbp: 0, e: 0, k: 0 },
+            { id: "L2", nombre: "VLADIMIR GUERRERO", ab: 0, rbi: 0, h1: 0, h2: 0, h3: 0, hr: 0, bb: 0, hbp: 0, e: 0, k: 0 }
         ];
         let historialJugadores = {};
 
-        window.cambiarPestaña = function(pestaña) {
-            if(!verificarPeriodoPrueba()) return; // Valida antes de navegar
+        // CONTROL DE INTERFAZ DE REGISTRO / INGRESO
+        document.getElementById("btn-register").addEventListener("click", async () => {
+            const email = document.getElementById("auth-email").value;
+            const pass = document.getElementById("auth-password").value;
+            try {
+                let res = await createUserWithEmailAndPassword(auth, email, pass);
+                // Guarda la estampa de tiempo del día 1 de registro seguro en la nube
+                await setDoc(doc(db, "usuarios", res.user.uid), { fechaRegistro: Date.now() });
+                limpiarErrorAuth();
+            } catch (err) { mostrarErrorAuth("Error de Registro: " + err.message); }
+        });
+
+        document.getElementById("btn-login").addEventListener("click", async () => {
+            const email = document.getElementById("auth-email").value;
+            const pass = document.getElementById("auth-password").value;
+            try { await signInWithEmailAndPassword(auth, email, pass); limpiarErrorAuth(); }
+            catch (err) { mostrarErrorAuth("Acceso denegado. Revisa tu correo o contraseña."); }
+        });
+
+        document.getElementById("btn-logout").addEventListener("click", () => {
+            if (suscripcionRealtime) suscripcionRealtime();
+            signOut(auth);
+        });
+
+        function mostrarErrorAuth(txt) {
+            let label = document.getElementById("auth-error");
+            label.innerText = txt; label.classList.remove("hidden");
+        }
+        function limpiarErrorAuth() { document.getElementById("auth-error").classList.add("hidden"); }
+
+        // MANEJO DE EXPIRACIÓN Y SINCRONIZACIÓN PRIVADA EN VIVO
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                usuarioActual = user;
+                document.getElementById("seccion-auth").classList.add("hidden");
+
+                // 1. Verificación remota segura de los 15 días de prueba
+                const userDoc = await getDoc(doc(db, "usuarios", user.uid));
+                let fechaRegistro = userDoc.exists() ? userDoc.data().fechaRegistro : Date.now();
+                let tiempoRestante = (fechaRegistro + (15 * 24 * 60 * 60 * 1000)) - Date.now();
+
+                if (tiempoRestante <= 0) {
+                    document.getElementById("bloqueo-licencia").classList.remove("hidden");
+                    return;
+                } else {
+                    let dias = Math.ceil(tiempoRestante / (1000 * 60 * 60 * 24));
+                    document.getElementById("label-dias-restantes").innerText = `⏱️ Periodo de prueba: ${dias} días restantes`;
+                }
+
+                // 2. Escucha exclusiva en la subcolección del usuario autenticado
+                suscripcionRealtime = onSnapshot(doc(db, "usuarios", usuarioActual.uid, "datos", "marcador"), (docSnap) => {
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        estadoJuego = data.estadoJuego || estadoJuego;
+                        lineupVisitante = data.lineupVisitante || lineupVisitante;
+                        lineupLocal = data.lineupLocal || lineupLocal;
+                        historialJugadores = data.historialJugadores || historialJugadores;
+                        recordsEquipos = data.recordsEquipos || recordsEquipos;
+                    } else {
+                        // Carga inicial por defecto si la base de datos de este usuario está en blanco
+                        historialJugadores = {};
+                        lineupVisitante.forEach(j => historialJugadores[j.id] = { nombre: j.nombre, club: "VISITANTE", ab: 40, rbi: 15, h1: 10, h2: 2, h3: 0, hr: 2, bb: 4, hbp: 0, e: 0, k: 5 });
+                        lineupLocal.forEach(j => historialJugadores[j.id] = { nombre: j.nombre, club: "LOCAL", ab: 42, rbi: 18, h1: 12, h2: 3, h3: 1, hr: 3, bb: 6, hbp: 1, e: 0, k: 4 });
+                        guardarEnCloudPrivado();
+                    }
+
+                    document.getElementById("input-name-visitante").value = estadoJuego.nombreVisitante;
+                    document.getElementById("input-name-local").value = estadoJuego.nombreLocal;
+                    actualizarNombresEquiposUI();
+                    sincronizarVistaAnotadorCompleto();
+                    actualizarTablaPosicionesUI();
+                });
+
+            } else {
+                usuarioActual = null;
+                document.getElementById("seccion-auth").classList.remove("hidden");
+                document.getElementById("bloqueo-licencia").classList.add("hidden");
+            }
+        });
+
+        async function guardarEnCloudPrivado() {
+            if (!usuarioActual) return;
+            await setDoc(doc(db, "usuarios", usuarioActual.uid, "datos", "marcador"), {
+                estadoJuego, lineupVisitante, lineupLocal, historialJugadores, recordsEquipos
+            });
+        }
+
+        // REPLICACIÓN EXACTA DE TODAS TUS FUNCIONES DE MÓDULO DE BÉISBOL
+        window.cambiarPestaña = function (pestaña) {
             const secAnotar = document.getElementById("seccion-pestaña-anotar");
             const secStats = document.getElementById("seccion-pestaña-stats");
             const btnAnotar = document.getElementById("btn-nav-anotar");
             const btnStats = document.getElementById("btn-nav-stats");
 
-            if(pestaña === 'anotar') {
+            if (pestaña === 'anotar') {
                 secAnotar.classList.remove("hidden"); secStats.classList.add("hidden");
                 btnAnotar.className = "px-4 py-2 text-xs font-bold rounded-lg transition-all bg-blue-600 text-white shadow-sm";
                 btnStats.className = "px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-400 hover:text-white";
@@ -354,8 +629,7 @@
             }
         };
 
-        window.registrarJugadaManual = function() {
-            if(!verificarPeriodoPrueba()) return;
+        window.registrarJugadaManual = function () {
             const input = document.getElementById("input-jugada-manual");
             let jugada = input.value.trim().toUpperCase();
             if (!jugada) return;
@@ -364,49 +638,34 @@
                 anotarTurno(jugada);
             } else {
                 alert(`Jugada registrada manualmente: ${jugada}`);
-                anotarTurno('K'); 
+                anotarTurno('K');
             }
             input.value = "";
             input.focus();
         };
 
-        function guardarEnLocalStorage() {
-            localStorage.setItem("score_v9_estadoJuego", JSON.stringify(estadoJuego));
-            localStorage.setItem("score_v9_lineupVisitante", JSON.stringify(lineupVisitante));
-            localStorage.setItem("score_v9_lineupLocal", JSON.stringify(lineupLocal));
-            localStorage.setItem("score_v9_historialJugadores", JSON.stringify(historialJugadores));
-            localStorage.setItem("score_v9_recordsEquipos", JSON.stringify(recordsEquipos));
-        }
-
-        function cargarDesdeLocalStorage() {
-            if(localStorage.getItem("score_v9_estadoJuego")) {
-                estadoJuego = JSON.parse(localStorage.getItem("score_v9_estadoJuego"));
-                lineupVisitante = JSON.parse(localStorage.getItem("score_v9_lineupVisitante"));
-                lineupLocal = JSON.parse(localStorage.getItem("score_v9_lineupLocal"));
-                historialJugadores = JSON.parse(localStorage.getItem("score_v9_historialJugadores"));
-                recordsEquipos = JSON.parse(localStorage.getItem("score_v9_recordsEquipos"));
-            } else {
-                lineupVisitante.forEach(j => historialJugadores[j.id] = { nombre: j.nombre, club: "VISITANTE", ab:40, rbi:15, h1:10, h2:2, h3:0, hr:2, bb:4, hbp:0, e:0, k:5 });
-                lineupLocal.forEach(j => historialJugadores[j.id] = { nombre: j.nombre, club: "LOCAL", ab:42, rbi:18, h1:12, h2:3, h3:1, hr:3, bb:6, hbp:1, e:0, k:4 });
-                guardarEnLocalStorage();
-            }
-            document.getElementById("input-name-visitante").value = estadoJuego.nombreVisitante;
-            document.getElementById("input-name-local").value = estadoJuego.nombreLocal;
-        }
-
-        window.actualizarNombresEquipos = function() {
+        window.actualizarNombresEquipos = function () {
             let vName = document.getElementById("input-name-visitante").value.trim().toUpperCase() || "VISITANTE";
             let lName = document.getElementById("input-name-local").value.trim().toUpperCase() || "LOCAL";
             estadoJuego.nombreVisitante = vName; estadoJuego.nombreLocal = lName;
+            actualizarNombresEquiposUI();
+            sincronizarVistaAnotadorCompleto();
+            guardarEnCloudPrivado();
+        };
+
+        function actualizarNombresEquiposUI() {
+            let vName = estadoJuego.nombreVisitante;
+            let lName = estadoJuego.nombreLocal;
             document.getElementById("td-label-visitante").innerText = vName;
             document.getElementById("td-label-local").innerText = lName;
-            
+
             let optFiltroV = document.getElementById("opt-filtro-visitante");
             let optFiltroL = document.getElementById("opt-filtro-local");
-            optFiltroV.value = vName; optFiltroV.innerText = `✈️ ${vName}`;
-            optFiltroL.value = lName; optFiltroL.innerText = `🏠 ${lName}`;
-            sincronizarVistaAnotador();
-        };
+            if (optFiltroV && optFiltroL) {
+                optFiltroV.value = vName; optFiltroV.innerText = `✈️ ${vName}`;
+                optFiltroL.value = lName; optFiltroL.innerText = `🏠 ${lName}`;
+            }
+        }
 
         function obtenerEquipoActivo() {
             if (estadoJuego.esParteAlta) {
@@ -416,8 +675,7 @@
             }
         }
 
-        window.modificarCarreraManual = function(equipo, valor) {
-            if(!verificarPeriodoPrueba()) return;
+        window.modificarCarreraManual = function (equipo, valor) {
             let inn = estadoJuego.inningActual > 9 ? 9 : estadoJuego.inningActual;
             if (equipo === 'local') {
                 estadoJuego.carrerasLocal = Math.max(0, estadoJuego.carrerasLocal + valor);
@@ -426,48 +684,46 @@
                 estadoJuego.carrerasVisitante = Math.max(0, estadoJuego.carrerasVisitante + valor);
                 estadoJuego.boxScore.visitante[inn] = Math.max(0, (estadoJuego.boxScore.visitante[inn] || 0) + valor);
             }
-            sincronizarPizarraUI(); guardarEnLocalStorage();
+            sincronizarPizarraUI(); guardarEnCloudPrivado();
         };
 
-        window.anotarCarreraPorHomePlate = function() {
+        window.anotarCarreraPorHomePlate = function () {
             let activo = obtenerEquipoActivo(); modificarCarreraManual(activo.claveBox, 1);
         };
 
-        window.modificarCuenta = function(tipo, valor) {
-            if(!verificarPeriodoPrueba()) return;
-            if(tipo === 'bolas') {
+        window.modificarCuenta = function (tipo, valor) {
+            if (tipo === 'bolas') {
                 estadoJuego.countBolas = Math.max(0, estadoJuego.countBolas + valor);
-                if(estadoJuego.countBolas >= 4) { alert("🚶 Base por bolas."); anotarTurno('BB'); return; }
-            } else if(tipo === 'strikes') {
+                if (estadoJuego.countBolas >= 4) { alert("🚶 Base por bolas."); anotarTurno('BB'); return; }
+            } else if (tipo === 'strikes') {
                 estadoJuego.countStrikes = Math.max(0, estadoJuego.countStrikes + valor);
-                if(estadoJuego.countStrikes >= 3) { alert("🪓 Ponche (K)."); anotarTurno('K'); return; }
-            } else if(tipo === 'outs') {
-                if(valor > 0) { agregarOut(); return; }
+                if (estadoJuego.countStrikes >= 3) { alert("🪓 Ponche (K)."); anotarTurno('K'); return; }
+            } else if (tipo === 'outs') {
+                if (valor > 0) { agregarOut(); return; }
                 else { estadoJuego.outs = Math.max(0, estadoJuego.outs - 1); }
             }
-            sincronizarPizarraUI(); guardarEnLocalStorage();
+            sincronizarPizarraUI(); guardarEnCloudPrivado();
         };
 
-        window.anotarTurno = function(evento) {
-            if(!verificarPeriodoPrueba()) return;
+        window.anotarTurno = function (evento) {
             let activo = obtenerEquipoActivo();
             if (activo.lineup.length === 0) return;
             let jugador = activo.lineup[estadoJuego[activo.indexKey]];
-            
+
             estadoJuego.countBolas = 0; estadoJuego.countStrikes = 0;
 
-            switch(evento) {
-                case 'H1': jugador.ab++; jugador.h1++; if(estadoJuego.esParteAlta) estadoJuego.hitsVisitante++; else estadoJuego.hitsLocal++; break;
-                case 'H2': jugador.ab++; jugador.h2++; if(estadoJuego.esParteAlta) estadoJuego.hitsVisitante++; else estadoJuego.hitsLocal++; break;
-                case 'H3': jugador.ab++; jugador.h3++; if(estadoJuego.esParteAlta) estadoJuego.hitsVisitante++; else estadoJuego.hitsLocal++; break;
-                case 'HR': 
-                    jugador.ab++; jugador.hr++; 
-                    if(estadoJuego.esParteAlta) estadoJuego.hitsVisitante++; else estadoJuego.hitsLocal++;
-                    let corredoresEnBase = (estadoJuego.bases[1]?1:0) + (estadoJuego.bases[2]?1:0) + (estadoJuego.bases[3]?1:0);
+            switch (evento) {
+                case 'H1': jugador.ab++; jugador.h1++; if (estadoJuego.esParteAlta) estadoJuego.hitsVisitante++; else estadoJuego.hitsLocal++; break;
+                case 'H2': jugador.ab++; jugador.h2++; if (estadoJuego.esParteAlta) estadoJuego.hitsVisitante++; else estadoJuego.hitsLocal++; break;
+                case 'H3': jugador.ab++; jugador.h3++; if (estadoJuego.esParteAlta) estadoJuego.hitsVisitante++; else estadoJuego.hitsLocal++; break;
+                case 'HR':
+                    jugador.ab++; jugador.hr++;
+                    if (estadoJuego.esParteAlta) estadoJuego.hitsVisitante++; else estadoJuego.hitsLocal++;
+                    let corredoresEnBase = (estadoJuego.bases[1] ? 1 : 0) + (estadoJuego.bases[2] ? 1 : 0) + (estadoJuego.bases[3] ? 1 : 0);
                     let carrerasProducidas = corredoresEnBase + 1;
-                    jugador.rbi += carrerasProducidas; 
+                    jugador.rbi += carrerasProducidas;
                     let inn = estadoJuego.inningActual > 9 ? 9 : estadoJuego.inningActual;
-                    if(estadoJuego.esParteAlta) {
+                    if (estadoJuego.esParteAlta) {
                         estadoJuego.carrerasVisitante += carrerasProducidas; estadoJuego.boxScore.visitante[inn] += carrerasProducidas;
                     } else {
                         estadoJuego.carrerasLocal += carrerasProducidas; estadoJuego.boxScore.local[inn] += carrerasProducidas;
@@ -476,18 +732,18 @@
                     break;
                 case 'BB': jugador.bb++; break;
                 case 'HBP': jugador.hbp++; break;
-                case 'E': jugador.ab++; jugador.e++; if(estadoJuego.esParteAlta) estadoJuego.erroresLocal++; else estadoJuego.erroresVisitante++; break;
+                case 'E': jugador.ab++; jugador.e++; if (estadoJuego.esParteAlta) estadoJuego.erroresLocal++; else estadoJuego.erroresVisitante++; break;
                 case 'K': jugador.ab++; jugador.k++; agregarOut(); break;
             }
 
             estadoJuego[activo.indexKey] = (estadoJuego[activo.indexKey] + 1) % activo.lineup.length;
-            sincronizarVistaAnotador();
+            sincronizarVistaAnotadorCompleto();
         };
 
         function agregarOut() {
             estadoJuego.outs++;
             if (estadoJuego.outs >= 3) {
-                estadoJuego.outs = 0; estadoJuego.bases = { 1: false, 2: false, 3: false }; 
+                estadoJuego.outs = 0; estadoJuego.bases = { 1: false, 2: false, 3: false };
                 estadoJuego.esParteAlta = !estadoJuego.esParteAlta;
                 if (estadoJuego.esParteAlta) estadoJuego.inningActual++;
                 alert(`🚨 3 Outs. Cambio de Inning.`);
@@ -495,11 +751,11 @@
             sincronizarPizarraUI();
         }
 
-        window.forzarCambioBateadorActivo = function() {
+        window.forzarCambioBateadorActivo = function () {
             let selector = document.getElementById("select-forzar-bateador");
             let activo = obtenerEquipoActivo();
             estadoJuego[activo.indexKey] = parseInt(selector.value);
-            sincronizarVistaAnotador();
+            sincronizarVistaAnotadorCompleto();
         };
 
         function actualizarSelectorBateadores() {
@@ -509,7 +765,7 @@
             activo.lineup.forEach((j, idx) => {
                 let op = document.createElement("option");
                 op.value = idx; op.text = `${idx + 1}. ${j.nombre}`;
-                if(idx === estadoJuego[activo.indexKey]) op.selected = true;
+                if (idx === estadoJuego[activo.indexKey]) op.selected = true;
                 selector.appendChild(op);
             });
         }
@@ -525,20 +781,22 @@
             document.getElementById('count-strikes').innerText = estadoJuego.countStrikes;
             document.getElementById('count-outs').innerText = estadoJuego.outs;
             document.getElementById('label-inning').innerText = `${estadoJuego.inningActual} ${estadoJuego.esParteAlta ? '▲ (Alta)' : '▼ (Baja)'}`;
-            
+
             for (let i = 1; i <= 9; i++) {
                 let cellV = document.getElementById(`v-i${i}`); let cellL = document.getElementById(`l-i${i}`);
                 if (estadoJuego.inningActual >= i) {
-                    cellV.innerText = estadoJuego.boxScore.visitante[i]; cellV.className = "text-slate-900 font-bold";
+                    cellV.innerText = estadoJuego.boxScore.visitante[i] !== undefined ? estadoJuego.boxScore.visitante[i] : 0;
+                    cellV.className = "text-slate-900 font-bold";
                     if (!estadoJuego.esParteAlta || estadoJuego.inningActual > i) {
-                        cellL.innerText = estadoJuego.boxScore.local[i]; cellL.className = "text-slate-900 font-bold";
+                        cellL.innerText = estadoJuego.boxScore.local[i] !== undefined ? estadoJuego.boxScore.local[i] : 0;
+                        cellL.className = "text-slate-900 font-bold";
                     } else { cellL.innerText = "-"; cellL.className = "font-normal text-slate-400"; }
                 } else {
                     cellV.innerText = "-"; cellV.className = "font-normal text-slate-400";
                     cellL.innerText = "-"; cellL.className = "font-normal text-slate-400";
                 }
             }
-            for (let i = 1; i <= 3; i++) document.getElementById(`base-${i}`).classList.toggle('base-ocupada', estadoJuego.bases[i]); 
+            for (let i = 1; i <= 3; i++) document.getElementById(`base-${i}`).classList.toggle('base-ocupada', estadoJuego.bases[i]);
         }
 
         function dibujarLineupLateral() {
@@ -560,7 +818,7 @@
             });
         }
 
-        function sincronizarVistaAnotador() {
+        function sincronizarVistaAnotadorCompleto() {
             let activo = obtenerEquipoActivo();
             if (activo.lineup.length > 0) {
                 let jugadorActual = activo.lineup[estadoJuego[activo.indexKey]];
@@ -573,36 +831,37 @@
             dibujarLineupLateral();
             sincronizarPizarraUI();
             actualizarSelectorBateadores();
-            guardarEnLocalStorage();
+            guardarEnCloudPrivado();
         }
 
-        window.agregarJugadorAlRoster = function() {
-            if(!verificarPeriodoPrueba()) return;
+        window.agregarJugadorAlRoster = function () {
             const input = document.getElementById("nuevo-jugador-nombre");
             const nombre = input.value.trim().toUpperCase();
             const equipoSeleccionado = document.getElementById("nuevo-jugador-equipo").value;
             if (!nombre) return;
             const idUnico = "J_" + Date.now();
-            let nuevoJugador = { id: idUnico, nombre: nombre, ab:0, rbi:0, h1:0, h2:0, h3:0, hr:0, bb:0, hbp:0, e:0, k:0 };
-            if(equipoSeleccionado === "visitante") lineupVisitante.push(nuevoJugador);
+            let nuevoJugador = { id: idUnico, nombre: nombre, ab: 0, rbi: 0, h1: 0, h2: 0, h3: 0, hr: 0, bb: 0, hbp: 0, e: 0, k: 0 };
+
+            if (equipoSeleccionado === "visitante") lineupVisitante.push(nuevoJugador);
             else lineupLocal.push(nuevoJugador);
+
             let tagClub = equipoSeleccionado === "visitante" ? estadoJuego.nombreVisitante : estadoJuego.nombreLocal;
-            historialJugadores[idUnico] = { nombre: nombre, club: tagClub, ab:0, rbi:0, h1:0, h2:0, h3:0, hr:0, bb:0, hbp:0, e:0, k:0 };
+            historialJugadores[idUnico] = { nombre: nombre, club: tagClub, ab: 0, rbi: 0, h1: 0, h2: 0, h3: 0, hr: 0, bb: 0, hbp: 0, e: 0, k: 0 };
             input.value = "";
-            sincronizarVistaAnotador();
+            sincronizarVistaAnotadorCompleto();
         };
 
-        window.finalizarPartidoYRegistrarRecord = function() {
-            if(!verificarPeriodoPrueba()) return;
+        window.finalizarPartidoYRegistrarRecord = function () {
             if (estadoJuego.carrerasLocal === estadoJuego.carrerasVisitante) { alert("No se permiten empates."); return; }
             if (!confirm("¿Deseas cerrar el encuentro?")) return;
+
             recordsEquipos.visitante.j++; recordsEquipos.local.j++;
             if (estadoJuego.carrerasVisitante > estadoJuego.carrerasLocal) { recordsEquipos.visitante.g++; recordsEquipos.local.p++; }
             else { recordsEquipos.local.g++; recordsEquipos.visitante.p++; }
-            
+
             const procesarCierreLineup = (linea, tagClub) => {
                 linea.forEach(j => {
-                    if (!historialJugadores[j.id]) historialJugadores[j.id] = { nombre: j.nombre, club: tagClub, ab:0, rbi:0, h1:0, h2:0, h3:0, hr:0, bb:0, hbp:0, e:0, k:0 };
+                    if (!historialJugadores[j.id]) historialJugadores[j.id] = { nombre: j.nombre, club: tagClub, ab: 0, rbi: 0, h1: 0, h2: 0, h3: 0, hr: 0, bb: 0, hbp: 0, e: 0, k: 0 };
                     let h = historialJugadores[j.id];
                     h.ab += j.ab; h.h1 += j.h1; h.h2 += j.h2; h.h3 += j.h3; h.hr += j.hr; h.bb += j.bb; h.hbp += j.hbp; h.e += j.e; h.k += j.k; h.rbi += j.rbi;
                 });
@@ -610,24 +869,29 @@
             procesarCierreLineup(lineupVisitante, estadoJuego.nombreVisitante);
             procesarCierreLineup(lineupLocal, estadoJuego.nombreLocal);
 
-            lineupVisitante.forEach(j => { j.ab=0; j.rbi=0; j.h1=0; j.h2=0; j.h3=0; j.hr=0; j.bb=0; j.hbp=0; j.e=0; j.k=0; });
-            lineupLocal.forEach(j => { j.ab=0; j.rbi=0; j.h1=0; j.h2=0; j.h3=0; j.hr=0; j.bb=0; j.hbp=0; j.e=0; j.k=0; });
+            lineupVisitante.forEach(j => { j.ab = 0; j.rbi = 0; j.h1 = 0; j.h2 = 0; j.h3 = 0; j.hr = 0; j.bb = 0; j.hbp = 0; j.e = 0; j.k = 0; });
+            lineupLocal.forEach(j => { j.ab = 0; j.rbi = 0; j.h1 = 0; j.h2 = 0; j.h3 = 0; j.hr = 0; j.bb = 0; j.hbp = 0; j.e = 0; j.k = 0; });
+
             estadoJuego.carrerasLocal = 0; estadoJuego.carrerasVisitante = 0; estadoJuego.hitsVisitante = 0; estadoJuego.hitsLocal = 0; estadoJuego.erroresVisitante = 0; estadoJuego.erroresLocal = 0;
             estadoJuego.outs = 0; estadoJuego.countBolas = 0; estadoJuego.countStrikes = 0; estadoJuego.inningActual = 1; estadoJuego.esParteAlta = true;
             estadoJuego.indexBateadorVisitante = 0; estadoJuego.indexBateadorLocal = 0; estadoJuego.bases = { 1: false, 2: false, 3: false };
             estadoJuego.boxScore = {
-                visitante: { 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0 },
-                local: { 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0 }
+                visitante: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 },
+                local: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 }
             };
-            guardarEnLocalStorage(); actualizarTablaPosiciones(); sincronizarVistaAnotador();
+
+            guardarEnCloudPrivado();
+            actualizarTablaPosicionesUI();
+            sincronizarVistaAnotadorCompleto();
             cambiarPestaña('anotar');
         };
 
-        function renderizarTablaHistorial() {
+        window.renderizarTablaHistorial = function () {
             const tbody = document.getElementById("tabla-historial-acumulado");
+            if (!tbody) return;
             const filtroSeleccionado = document.getElementById("filtro-equipo-stats").value;
             tbody.innerHTML = "";
-            
+
             Object.values(historialJugadores).forEach(j => {
                 if (filtroSeleccionado !== "TODOS" && j.club !== filtroSeleccionado) return;
                 let hits = j.h1 + j.h2 + j.h3 + j.hr;
@@ -651,30 +915,23 @@
             });
         }
 
-        window.conmutarBaseManual = function(b) { 
-            if(!verificarPeriodoPrueba()) return;
-            estadoJuego.bases[b] = !estadoJuego.bases[b]; sincronizarPizarraUI(); guardarEnLocalStorage();
+        window.conmutarBaseManual = function (b) {
+            estadoJuego.bases[b] = !estadoJuego.bases[b]; sincronizarPizarraUI(); guardarEnCloudPrivado();
         };
 
-        function actualizarTablaPosiciones() {
+        function actualizarTablaPosicionesUI() {
             let pctV = recordsEquipos.visitante.j > 0 ? (recordsEquipos.visitante.g / recordsEquipos.visitante.j).toFixed(3).replace(/^0/, '') : '.000';
             let pctL = recordsEquipos.local.j > 0 ? (recordsEquipos.local.g / recordsEquipos.local.j).toFixed(3).replace(/^0/, '') : '.000';
-            document.getElementById('jj-visitante').innerText = recordsEquipos.visitante.j; 
-            document.getElementById('g-visitante').innerText = recordsEquipos.visitante.g; 
-            document.getElementById('p-visitante').innerText = recordsEquipos.visitante.p; 
+            document.getElementById('jj-visitante').innerText = recordsEquipos.visitante.j;
+            document.getElementById('g-visitante').innerText = recordsEquipos.visitante.g;
+            document.getElementById('p-visitante').innerText = recordsEquipos.visitante.p;
             document.getElementById('pct-visitante').innerText = pctV;
-            document.getElementById('jj-local').innerText = recordsEquipos.local.j; 
-            document.getElementById('g-local').innerText = recordsEquipos.local.g; 
-            document.getElementById('p-local').innerText = recordsEquipos.local.p; 
+            document.getElementById('jj-local').innerText = recordsEquipos.local.j;
+            document.getElementById('g-local').innerText = recordsEquipos.local.g;
+            document.getElementById('p-local').innerText = recordsEquipos.local.p;
             document.getElementById('pct-local').innerText = pctL;
         }
-
-        // EJECUCIÓN AL CARGAR
-        verificarPeriodoPrueba(); // Ejecución inicial de seguridad
-        cargarDesdeLocalStorage();
-        actualizarNombresEquipos(); 
-        sincronizarVistaAnotador();
-        actualizarTablaPosiciones();
     </script>
 </body>
+
 </html>
