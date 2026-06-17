@@ -14,6 +14,27 @@
 </head>
 <body class="bg-slate-50 font-sans text-slate-800">
 
+    <div id="bloqueo-licencia" class="fixed inset-0 bg-slate-900 z-[100] flex flex-col items-center justify-center p-6 text-center hidden">
+        <div class="bg-white max-w-md w-full rounded-2xl p-8 shadow-2xl border border-slate-100 space-y-6">
+            <div class="text-6xl text-center">⏳</div>
+            <h2 class="text-2xl font-black text-slate-900 tracking-tight">Período de Prueba Terminado</h2>
+            <p class="text-sm text-slate-500 leading-relaxed">
+                Tus 15 días de evaluación gratuita de <strong>Scorekeeper Pro</strong> han expirado. Para continuar registrando partidos, estadísticas acumuladas y standings en vivo, por favor activa tu licencia comercial.
+            </p>
+            <div class="p-4 bg-blue-50 rounded-xl border border-blue-100 text-left space-y-2">
+                <span class="text-[10px] font-bold text-blue-700 uppercase tracking-wider block">Beneficios Premium:</span>
+                <ul class="text-xs font-bold text-slate-700 space-y-1">
+                    <li>• Soporte y reportes limpios en un clic.</li>
+                    <li>• Sincronización en la nube para fanáticos.</li>
+                    <li>• Personalización con el logo de tu liga.</li>
+                </ul>
+            </div>
+            <a href="https://wa.me/tu_numero" target="_blank" class="block w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-3 rounded-xl text-xs uppercase tracking-wider shadow-md transition-all">
+                📲 Contactar Administrador / Comprar Licencia
+            </a>
+        </div>
+    </div>
+
     <nav class="bg-blue-900 text-white shadow-md sticky top-0 z-50">
         <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center p-4 gap-4">
             <h1 class="text-xl font-bold tracking-wider">⚾ LOS AMIGOS J.S AUSENTES</h1>
@@ -37,7 +58,10 @@
                 <div class="lg:col-span-2 space-y-6">
                     
                     <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 overflow-x-auto">
-                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-3">📋 PIZARRA TRADICIONAL DE ENCUENTRO</span>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">📋 PIZARRA TRADICIONAL DE ENCUENTRO</span>
+                            <span id="label-dias-restantes" class="text-[10px] font-black text-amber-600 bg-amber-50 px-2 py-0.5 rounded-md"></span>
+                        </div>
                         
                         <table class="min-w-full table-fixed border-collapse text-center text-sm font-bold">
                             <thead>
@@ -260,6 +284,35 @@
     </div>
 
     <script>
+        // MÓDULO DE VERIFICACIÓN DE LICENCIA (15 DÍAS DE PRUEBA)
+        function verificarPeriodoPrueba() {
+            const DURACION_PRUEBA = 15 * 24 * 60 * 60 * 1000; // 15 días en milisegundos
+            let fechaInicio = localStorage.getItem("trial_scorekeeper_start");
+            let ahora = Date.now();
+
+            if (!fechaInicio) {
+                // Si es la primera vez que abre la app, marcamos la fecha de inicio del reloj
+                localStorage.setItem("trial_scorekeeper_start", ahora.toString());
+                fechaInicio = ahora;
+            } else {
+                fechaInicio = parseInt(fechaInicio);
+            }
+
+            let fechaExpiracion = fechaInicio + DURACION_PRUEBA;
+            let tiempoRestante = fechaExpiracion - ahora;
+
+            if (tiempoRestante <= 0) {
+                // Bloquea la pantalla inmediatamente
+                document.getElementById("bloqueo-licencia").classList.remove("hidden");
+                return false;
+            } else {
+                // Muestra de manera informativa los días que le quedan en el header de la pizarra
+                let diasRestantes = Math.ceil(tiempoRestante / (1000 * 60 * 60 * 24));
+                document.getElementById("label-dias-restantes").innerText = `⏱️ Periodo de prueba: ${diasRestantes} días restantes`;
+                return true;
+            }
+        }
+
         let estadoJuego = {
             carrerasLocal: 0, carrerasVisitante: 0, hitsVisitante: 0, hitsLocal: 0, erroresVisitante: 0, erroresLocal: 0,
             countBolas: 0, countStrikes: 0, outs: 0, inningActual: 1, esParteAlta: true, 
@@ -283,6 +336,7 @@
         let historialJugadores = {};
 
         window.cambiarPestaña = function(pestaña) {
+            if(!verificarPeriodoPrueba()) return; // Valida antes de navegar
             const secAnotar = document.getElementById("seccion-pestaña-anotar");
             const secStats = document.getElementById("seccion-pestaña-stats");
             const btnAnotar = document.getElementById("btn-nav-anotar");
@@ -300,17 +354,15 @@
             }
         };
 
-        // FUNCIÓN NUEVA: Registra lo digitado directamente por teclado
         window.registrarJugadaManual = function() {
+            if(!verificarPeriodoPrueba()) return;
             const input = document.getElementById("input-jugada-manual");
             let jugada = input.value.trim().toUpperCase();
             if (!jugada) return;
 
-            // Mapeo inteligente si digitan los comandos estándar del tablero
             if (['H1', 'H2', 'H3', 'HR', 'BB', 'HBP', 'E', 'K'].includes(jugada)) {
                 anotarTurno(jugada);
             } else {
-                // Para cualquier otro código manual (F9, 43, etc.), cuenta como turno oficial (Out) por defecto
                 alert(`Jugada registrada manualmente: ${jugada}`);
                 anotarTurno('K'); 
             }
@@ -365,6 +417,7 @@
         }
 
         window.modificarCarreraManual = function(equipo, valor) {
+            if(!verificarPeriodoPrueba()) return;
             let inn = estadoJuego.inningActual > 9 ? 9 : estadoJuego.inningActual;
             if (equipo === 'local') {
                 estadoJuego.carrerasLocal = Math.max(0, estadoJuego.carrerasLocal + valor);
@@ -381,6 +434,7 @@
         };
 
         window.modificarCuenta = function(tipo, valor) {
+            if(!verificarPeriodoPrueba()) return;
             if(tipo === 'bolas') {
                 estadoJuego.countBolas = Math.max(0, estadoJuego.countBolas + valor);
                 if(estadoJuego.countBolas >= 4) { alert("🚶 Base por bolas."); anotarTurno('BB'); return; }
@@ -395,6 +449,7 @@
         };
 
         window.anotarTurno = function(evento) {
+            if(!verificarPeriodoPrueba()) return;
             let activo = obtenerEquipoActivo();
             if (activo.lineup.length === 0) return;
             let jugador = activo.lineup[estadoJuego[activo.indexKey]];
@@ -522,6 +577,7 @@
         }
 
         window.agregarJugadorAlRoster = function() {
+            if(!verificarPeriodoPrueba()) return;
             const input = document.getElementById("nuevo-jugador-nombre");
             const nombre = input.value.trim().toUpperCase();
             const equipoSeleccionado = document.getElementById("nuevo-jugador-equipo").value;
@@ -537,6 +593,7 @@
         };
 
         window.finalizarPartidoYRegistrarRecord = function() {
+            if(!verificarPeriodoPrueba()) return;
             if (estadoJuego.carrerasLocal === estadoJuego.carrerasVisitante) { alert("No se permiten empates."); return; }
             if (!confirm("¿Deseas cerrar el encuentro?")) return;
             recordsEquipos.visitante.j++; recordsEquipos.local.j++;
@@ -595,6 +652,7 @@
         }
 
         window.conmutarBaseManual = function(b) { 
+            if(!verificarPeriodoPrueba()) return;
             estadoJuego.bases[b] = !estadoJuego.bases[b]; sincronizarPizarraUI(); guardarEnLocalStorage();
         };
 
@@ -611,6 +669,8 @@
             document.getElementById('pct-local').innerText = pctL;
         }
 
+        // EJECUCIÓN AL CARGAR
+        verificarPeriodoPrueba(); // Ejecución inicial de seguridad
         cargarDesdeLocalStorage();
         actualizarNombresEquipos(); 
         sincronizarVistaAnotador();
